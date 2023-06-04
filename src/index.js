@@ -7,7 +7,7 @@ fetchBreeds()
     breedSelect.innerHTML = html
 })
 .catch(error => {
-    console.error(error);
+    alert.error(error);
     showErrorMessage();
 })
 .finally(() => {
@@ -22,7 +22,7 @@ function onCreateCatCard() {
         renderCatInfo(data);
     })
     .catch(error => {
-        console.error(error);
+        alert.error(error);
         showErrorMessage();
     })    
     .finally(() => {
@@ -56,7 +56,6 @@ function renderCatInfo(catData) {
 
 function showErrorMessage() {
     errorMessage.hidden = false;
-    breedSelect.hidden = true;
     catInfo.hidden = true;
     loader.hidden = true;
 };
