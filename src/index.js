@@ -7,7 +7,8 @@ fetchBreeds()
     breedSelect.innerHTML = html
 })
 .catch(error => {
-    alert.error(error);
+    breedSelect.hidden = true;
+    errorMessage.textContent = 'Oops! Something went wrong! Try reloading the page!';
     showErrorMessage();
 })
 .finally(() => {
@@ -22,7 +23,7 @@ function onCreateCatCard() {
         renderCatInfo(data);
     })
     .catch(error => {
-        alert.error(error);
+        errorMessage.textContent = 'Oops! Something went wrong! Try another cat!';
         showErrorMessage();
     })    
     .finally(() => {
