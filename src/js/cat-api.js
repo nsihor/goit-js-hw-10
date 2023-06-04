@@ -1,4 +1,4 @@
-import { breedSelect, loader, errorMessage, catInfo } from './refs.js'
+import {loader} from './refs.js'
 
 const API_KEY = "live_JX7Cl70WmKbcf2YQASZ9ePLvqYa4PVuP0M6KdaEkMtiX6yOKS4FuSAsEi8I25n87";
 const BASE_URL = "https://api.thecatapi.com/v1";
@@ -11,7 +11,6 @@ export function fetchBreeds () {
         }
         return resp.json();
     })
-    .catch(showErrorMessage)
 };
 
 export function fetchCatByBreed(breedId) {
@@ -25,12 +24,4 @@ export function fetchCatByBreed(breedId) {
         return resp.json();
     })
     .then(data => data[0])
-    .catch(showErrorMessage)
-};
-
-export function showErrorMessage() {
-    errorMessage.hidden = false;
-    breedSelect.hidden = true;
-    catInfo.hidden = true;
-    loader.hidden = true;
 };

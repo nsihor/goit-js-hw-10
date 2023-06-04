@@ -1,11 +1,17 @@
-import {fetchBreeds, fetchCatByBreed, showErrorMessage} from './js/cat-api.js'
-import {breedSelect, loader, catInfo } from './js/refs.js'
+import {fetchBreeds, fetchCatByBreed} from './js/cat-api.js'
+import {breedSelect, loader, catInfo, errorMessage} from './js/refs.js'
 
 fetchBreeds()
 .then(data => data.map(breed => `<option value=${breed.id}>${breed.name}</option>`).join(''))
 .then(html => {
-    loader.hidden = true;
     breedSelect.innerHTML = html
+})
+.catch(error => {
+    console.error(error);
+    showErrorMessage();
+})
+.finally(() => {
+    loader.hidden = true;
 });
 
 breedSelect.addEventListener('change', onCreateCatCard);
@@ -48,4 +54,9 @@ function renderCatInfo(catData) {
     catInfo.hidden = false;
 };
 
-
+function showErrorMessage() {
+    errorMessage.hidden = false;
+    breedSelect.hidden = true;
+    catInfo.hidden = true;
+    loader.hidden = true;
+};
