@@ -12,23 +12,26 @@ fetchBreeds()
     showErrorMessage();
 })
 .finally(() => {
-    loader.hidden = true;
+    loader.classList.add('is-hidden');
 });
 
 breedSelect.addEventListener('change', onCreateCatCard);
 
-function onCreateCatCard() {
-    fetchCatByBreed(breedSelect.value)
-    .then(data => {
-        renderCatInfo(data);
-    })
-    .catch(error => {
-        errorMessage.textContent = 'Oops! Something went wrong! Try another cat!';
-        showErrorMessage();
-    })    
-    .finally(() => {
-        loader.hidden = true;
-    });
+function onCreateCatCard(arr) {
+  errorMessage.hidden = true;
+  catInfo.innerHTML = '';
+  loader.classList.remove('is-hidden');
+
+  fetchCatByBreed(arr[0].value)
+  .then(data => {
+      renderCatInfo(data);
+  })
+  .catch(error => {
+      errorMessage.textContent = 'Oops! Something went wrong! Try another cat!';
+      showErrorMessage();
+  })    
+  .finally(() => {
+    loader.classList.add('is-hidden');  });
 }
 
 function renderCatInfo(catData) {
@@ -58,5 +61,5 @@ function renderCatInfo(catData) {
 function showErrorMessage() {
     errorMessage.hidden = false;
     catInfo.hidden = true;
-    loader.hidden = true;
+    loader.classList.add('is-hidden');
 };
