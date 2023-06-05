@@ -1,13 +1,30 @@
+import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css'
 import {fetchBreeds, fetchCatByBreed} from './js/cat-api.js'
-import {breedSelect, loader, catInfo, errorMessage} from './js/refs.js'
+import {loader, catInfo, errorMessage} from './js/refs.js'
+
+const breedSelect = new SlimSelect({
+  select: '#single',
+  settings: {
+    placeholderText: 'Fill the cat`s name',
+  },
+  events: {
+    afterChange: (newVal) => {
+      onCreateCatCard(newVal)    
+    }
+  }
+})
 
 fetchBreeds()
-.then(data => data.map(breed => `<option value=${breed.id}>${breed.name}</option>`).join(''))
+.then(data => data.map(breed => ({
+  value: breed.id,
+  text: breed.name
+})))
 .then(html => {
-    breedSelect.innerHTML = html
+    breedSelect.setData(html);
 })
 .catch(error => {
-    breedSelect.hidden = true;
+    // breedSelect.hidden = true;
     errorMessage.textContent = 'Oops! Something went wrong! Try reloading the page!';
     showErrorMessage();
 })
@@ -15,7 +32,6 @@ fetchBreeds()
     loader.classList.add('is-hidden');
 });
 
-breedSelect.addEventListener('change', onCreateCatCard);
 
 function onCreateCatCard(arr) {
   errorMessage.hidden = true;
